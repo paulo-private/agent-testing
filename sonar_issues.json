@@ -193,5 +193,31 @@
     "message": "Use \"logging.exception()\" instead.",
     "status": "OPEN",
     "flows": []
+  },
+  {
+    "key": "issue-016",
+    "rule": "python:S5843",
+    "severity": "MAJOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:validator.py",
+    "project": "sonar-test-project",
+    "line": 4,
+    "textRange": { "startLine": 4, "endLine": 4, "startOffset": 14, "endOffset": 220 },
+    "message": "Simplify this regular expression to reduce its complexity from 31 to the 20 allowed.",
+    "status": "OPEN",
+    "flows": []
+  },
+  {
+    "key": "issue-017",
+    "rule": "python:S5843",
+    "severity": "MAJOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:validator.py",
+    "project": "sonar-test-project",
+    "line": 6,
+    "textRange": { "startLine": 6, "endLine": 6, "startOffset": 10, "endOffset": 195 },
+    "message": "Simplify this regular expression to reduce its complexity from 28 to the 20 allowed.",
+    "status": "OPEN",
+    "flows": []
   }
 ]

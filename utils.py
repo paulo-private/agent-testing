@@ -7,7 +7,6 @@ def process_items(items, config):
             if config.get("skip_none"):
                 if config.get("log_skipped"):
                     print("Skipping None item")
-                continue
             else:
                 if config.get("strict"):
                     if config.get("raise_on_none"):

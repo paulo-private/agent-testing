@@ -10,7 +10,7 @@ def fetch_data(url):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as e:
-        logger.error("HTTP Error %d for GET %s", e.response.status_code, url)
+        logger.exception("HTTP Error %d for GET %s", e.response.status_code, url)
         return None
 
 
@@ -20,5 +20,5 @@ def post_data(url, payload):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as e:
-        logger.error("HTTP Error %d for POST %s", e.response.status_code, url)
+        logger.exception("HTTP Error %d for POST %s", e.response.status_code, url)
         return None

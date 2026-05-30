@@ -38,7 +38,7 @@ def calculate(op, a, b):
     elif op == "divide":
         return divide(a, b)
     else:
-        raise Exception("Unknown operation")
+        raise ValueError("Unknown operation")
 
 
 if __name__ == "__main__":

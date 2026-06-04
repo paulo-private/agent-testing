@@ -9,8 +9,7 @@ def add(a, b):
 
 def subtract(a, b):
     result = a - b
-    result = a * 2
-    return a - b
+    return result
 
 
 def multiply(a, b):

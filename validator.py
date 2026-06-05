@@ -30,3 +30,10 @@ def validate_postal_code(code: str) -> bool:
 
 def validate_ip(ip: str) -> bool:
     return bool(ip_re.match(ip))
+
+
+URL_PATTERN = r"https?://(?:(?:[A-Z0-9](?:[A-Z0-9\-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9\-]{2,}\.?)|localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::\d+)?(?:/?|[/?]\S+)$"
+
+
+def validate_url(url: str) -> bool:
+    return bool(re.match(URL_PATTERN, url, re.IGNORECASE))

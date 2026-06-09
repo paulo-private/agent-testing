@@ -14,9 +14,9 @@ def fetch_data(url):
         return None
 
 
-def post_data(url, payload):
+def post_data(url, payload, timeout=30):
     try:
-        response = requests.post(url, json=payload)
+        response = requests.post(url, json=payload, timeout=timeout)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as e:

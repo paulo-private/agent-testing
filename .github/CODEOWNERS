@@ -1,0 +1,5 @@
+# Individual-user ownership — exercises the users[] path in hasAnyRequestedReviewers
+*.py @pcanelas
+
+# Team ownership — exercises the teams[] path (the bug that was fixed)
+calculator.py @paulo-private/billing-reviewers

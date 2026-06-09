@@ -25,6 +25,8 @@ def divide(a, b):
 
 
 def power(a, b):
+    if b < 0:
+        raise ValueError("Negative exponent not supported")
     return a**b
 
 

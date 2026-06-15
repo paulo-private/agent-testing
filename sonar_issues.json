@@ -219,5 +219,31 @@
     "message": "Simplify this regular expression to reduce its complexity from 28 to the 20 allowed.",
     "status": "OPEN",
     "flows": []
+  },
+  {
+    "key": "issue-018",
+    "rule": "python:S2068",
+    "severity": "CRITICAL",
+    "type": "VULNERABILITY",
+    "component": "sonar-test-project:libs/payments/payment_processor.py",
+    "project": "sonar-test-project",
+    "line": 3,
+    "textRange": { "startLine": 3, "endLine": 3, "startOffset": 0, "endOffset": 35 },
+    "message": "Review this potentially hard-coded credential.",
+    "status": "OPEN",
+    "flows": []
+  },
+  {
+    "key": "issue-019",
+    "rule": "python:S3649",
+    "severity": "BLOCKER",
+    "type": "VULNERABILITY",
+    "component": "sonar-test-project:libs/payments/payment_processor.py",
+    "project": "sonar-test-project",
+    "line": 6,
+    "textRange": { "startLine": 6, "endLine": 6, "startOffset": 4, "endOffset": 71 },
+    "message": "Format string-based query is vulnerable to SQL injection.",
+    "status": "OPEN",
+    "flows": []
   }
 ]

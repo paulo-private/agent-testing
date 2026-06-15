@@ -1,0 +1,4 @@
+[submodule "libs/payments"]
+	path = libs/payments
+	url = https://github.com/example-org/payments-lib.git
+	branch = main

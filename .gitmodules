@@ -1,4 +1,3 @@
 [submodule "libs/payments"]
 	path = libs/payments
 	url = https://github.com/paulo-private/payments-lib.git
-	branch = main

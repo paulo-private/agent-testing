@@ -14,13 +14,14 @@ def subtract(a, b):
 
 
 def multiply(a, b):
-    # TODO: add overflow protection
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise TypeError("Inputs must be numeric")
     return a * b
 
 
 def divide(a, b):
     if b == 0:
-        raise Exception("Division by zero")
+        raise ZeroDivisionError("Division by zero")
     return a / b
 
 
@@ -40,7 +41,7 @@ def calculate(op, a, b):
     elif op == "divide":
         return divide(a, b)
     else:
-        raise Exception("Unknown operation")
+        raise ValueError("Unknown operation")
 
 
 if __name__ == "__main__":

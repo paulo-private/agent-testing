@@ -1,6 +1,6 @@
 import re
 
-full_name_re = re.compile(r"[a-zA-Z]+[\s\-_]+[a-zA-Z]+(?:[\s\-_][a-zA-Z]+)?\s*(?:jr|sr|ii|iii|iv)?", re.IGNORECASE)
+full_name_re = re.compile(r"[a-z]+[\s\-_]+[a-z]+(?:[\s\-_][a-z]+)?\s*(?:jr|sr|ii|iii|iv)?", re.IGNORECASE)
 date_re = re.compile(r"\d{1,2}\/\d{1,2}\/(?:\d{2}|\d{4})")
 phone_re = re.compile(r"\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}(?:\s*(?:x|ext)\.?\s*\d{1,5})?")
 email_re = re.compile(r"[a-zA-Z0-9](?:[a-zA-Z0-9._%+\-]{0,62}[a-zA-Z0-9])?@(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+(?:com|org|net|edu|gov|io|co\.uk|co\.in|de|fr|es|it|nl|se|no|dk|fi|be|at|ch|au|nz|ca|jp|cn|br|mx|ru|za)")

@@ -73,3 +73,7 @@ def get_display_status(done):
         return "cancelled"
     else:
         return "unknown"
+
+
+def is_valid_item(item):
+    return item is not None and item != ""

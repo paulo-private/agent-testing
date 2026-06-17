@@ -26,5 +26,9 @@ def run_demo():
     print(f"Results: {results}, Errors: {errors}")
 
 
-if __name__ == "__main__":
+def main():
     run_demo()
+
+
+if __name__ == "__main__":
+    main()

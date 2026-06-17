@@ -37,3 +37,7 @@ URL_PATTERN = r"https?://(?:(?:[A-Z0-9](?:[A-Z0-9\-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]
 
 def validate_url(url: str) -> bool:
     return bool(re.match(URL_PATTERN, url, re.IGNORECASE))
+
+
+def validate_non_empty(value: str) -> bool:
+    return bool(value and value.strip())

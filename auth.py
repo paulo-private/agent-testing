@@ -34,3 +34,7 @@ def generate_token(user_id):
 
     random.seed(user_id)
     return str(random.randint(100000, 999999))
+
+
+def is_admin(username):
+    return username == "admin"

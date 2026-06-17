@@ -42,3 +42,10 @@ def insert_task(title):
     cursor = conn.cursor()
     cursor.execute("INSERT INTO tasks (title, done) VALUES (?, ?)", (title, 0))
     conn.commit()
+
+
+def delete_task(task_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+    conn.commit()

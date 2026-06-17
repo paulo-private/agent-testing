@@ -22,3 +22,13 @@ def post_data(url, payload, timeout=30):
     except requests.exceptions.HTTPError as e:
         logger.error("HTTP Error %d for POST %s", e.response.status_code, url)
         return None
+
+
+def delete_data(url, timeout=30):
+    try:
+        response = requests.delete(url, timeout=timeout)
+        response.raise_for_status()
+        return True
+    except requests.exceptions.HTTPError as e:
+        logger.error("HTTP Error %d for DELETE %s", e.response.status_code, url)
+        return False

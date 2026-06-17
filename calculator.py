@@ -46,3 +46,4 @@ def calculate(op, a, b):
 if __name__ == "__main__":
     print(calculate("add", 1, 2))
     print(calculate("divide", 10, 2))
+

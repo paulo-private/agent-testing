@@ -8,7 +8,7 @@ def charge_card(user_id, amount, db):
     result = db.execute(query)
     card = result.fetchone()
     if not card:
-        raise Exception("Card not found")  # python:S112 - generic exception
+        raise ValueError("Card not found")  # python:S112 - generic exception
     return {"status": "charged", "amount": amount}
 
 

@@ -26,19 +26,17 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Check token
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          if [ -z "$SONAR_TOKEN" ]; then echo "SONAR_TOKEN is empty!"; else echo "SONAR_TOKEN is set (length: ${#SONAR_TOKEN})"; fi
+      - name: Build
+        run: mvn -B compile test-compile
 
-      - name: Build and analyze
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn -B verify sonar:sonar \
-            -Dsonar.projectKey=paulo-private_agent-testing \
-            -Dsonar.organization=paulo-private \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=$SONAR_TOKEN \
-            -Dsonar.qualitygate.wait=false
+        with:
+          args: >
+            -Dsonar.projectKey=paulo-private_agent-testing
+            -Dsonar.organization=paulo-private
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.java.test.binaries=target/test-classes

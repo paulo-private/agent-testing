@@ -13,6 +13,9 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.organization>paulo-private</sonar.organization>
+        <sonar.scanner.sonarcloudUrl>https://dev7.sc-dev7.io</sonar.scanner.sonarcloudUrl>
+        <sonar.scanner.apiBaseUrl>https://api.sc-dev7.io</sonar.scanner.apiBaseUrl>
     </properties>
 
     <dependencies>

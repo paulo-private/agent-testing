@@ -40,5 +40,5 @@ jobs:
             -Dsonar.projectKey=paulo-private_agent-testing \
             -Dsonar.organization=paulo-private \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.login=$SONAR_TOKEN \
             -Dsonar.qualitygate.wait=false

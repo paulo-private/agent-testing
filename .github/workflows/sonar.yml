@@ -41,3 +41,4 @@ jobs:
             -Dsonar.organization=paulo-private
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.test.binaries=target/test-classes
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}

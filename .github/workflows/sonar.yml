@@ -34,3 +34,4 @@ jobs:
           -Dsonar.organization=paulo-private
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.qualitygate.wait=false

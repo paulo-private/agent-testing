@@ -245,5 +245,44 @@
     "message": "Format string-based query is vulnerable to SQL injection.",
     "status": "OPEN",
     "flows": []
+  },
+  {
+    "key": "issue-020",
+    "rule": "java:S8714",
+    "severity": "MAJOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:src/test/java/com/example/PaymentServiceTest.java",
+    "project": "sonar-test-project",
+    "line": 12,
+    "textRange": { "startLine": 12, "endLine": 16, "startOffset": 8, "endOffset": 9 },
+    "message": "Use \"assertDoesNotThrow\" instead of a try/catch with a call to fail.",
+    "status": "OPEN",
+    "flows": []
+  },
+  {
+    "key": "issue-021",
+    "rule": "java:S1220",
+    "severity": "MINOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:src/main/java/com/example/package-info.java",
+    "project": "sonar-test-project",
+    "line": 1,
+    "textRange": { "startLine": 1, "endLine": 1, "startOffset": 0, "endOffset": 0 },
+    "message": "Move this file to a named package.",
+    "status": "OPEN",
+    "flows": []
+  },
+  {
+    "key": "issue-022",
+    "rule": "java:S2309",
+    "severity": "MINOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:src/main/java/com/example/package-info.java",
+    "project": "sonar-test-project",
+    "line": 1,
+    "textRange": { "startLine": 1, "endLine": 1, "startOffset": 0, "endOffset": 0 },
+    "message": "Add a package declaration to this file.",
+    "status": "OPEN",
+    "flows": []
   }
 ]

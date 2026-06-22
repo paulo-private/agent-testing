@@ -26,6 +26,28 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Diagnose token
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "=== Token shape ==="
+          echo "Length: ${#SONAR_TOKEN}"
+          echo "First 4 chars: ${SONAR_TOKEN:0:4}"
+          echo ""
+          echo "=== Test 1: Validate token ==="
+          curl -s -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/authentication/validate"
+          echo ""
+          echo ""
+          echo "=== Test 2: Whoami ==="
+          curl -s -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/users/current" || echo "current user lookup failed"
+          echo ""
+          echo "=== Test 3: List projects in org ==="
+          curl -s -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/projects/search?organization=paulo-private"
+          echo ""
+          echo "=== Test 4: Check specific project ==="
+          curl -s -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/components/show?component=paulo-private_agent-testing"
+          echo ""
+
       - name: Build
         run: mvn -B compile test-compile
 

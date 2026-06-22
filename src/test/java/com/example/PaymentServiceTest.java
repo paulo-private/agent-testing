@@ -25,4 +25,14 @@ public class PaymentServiceTest {
             fail("refund should not throw an exception");
         }
     }
+
+    @Test
+    void cancelPayment_shouldNotThrow() {
+        PaymentService service = new PaymentService();
+        try {
+            service.cancel("tx-123");
+        } catch (Exception e) {
+            fail("cancel should not throw an exception");
+        }
+    }
 }

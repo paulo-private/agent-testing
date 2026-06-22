@@ -273,6 +273,19 @@
     "flows": []
   },
   {
+    "key": "issue-020b",
+    "rule": "java:S8714",
+    "severity": "MAJOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:src/test/java/com/example/PaymentServiceTest.java",
+    "project": "sonar-test-project",
+    "line": 30,
+    "textRange": { "startLine": 30, "endLine": 34, "startOffset": 8, "endOffset": 9 },
+    "message": "Use \"assertDoesNotThrow\" instead of a try/catch with a call to fail.",
+    "status": "OPEN",
+    "flows": []
+  },
+  {
     "key": "issue-022",
     "rule": "java:S2309",
     "severity": "MINOR",

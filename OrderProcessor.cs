@@ -53,6 +53,8 @@ public class ShipmentResult
 
 public class ShipmentProcessor
 {
+    private const string Freight = "FREIGHT";
+
     public ShipmentResult ProcessShipmentOrder(ShipmentOrder order)
     {
         ValidateOrder(order);
@@ -100,7 +102,7 @@ public class ShipmentProcessor
         {
             case "express":
                 if (order.Weight > 30 || order.IsOversized)
-                    return ("FREIGHT", 2);
+                    return (Freight, 2);
                 else if (order.Destination.IsInternational && order.Destination.CountryCode != "CA")
                     return ("INTL_EXPRESS", 3);
                 else
@@ -109,7 +111,7 @@ public class ShipmentProcessor
                 if (order.Destination.IsInternational)
                     return ("INTL_STANDARD", 14);
                 else if (order.Weight > 50)
-                    return ("FREIGHT", 5);
+                    return (Freight, 5);
                 else
                     return ("STANDARD", 5);
             case "economy":
@@ -127,7 +129,7 @@ public class ShipmentProcessor
 
     private static decimal CalculateShippingCost(string carrier, decimal basePrice, double weight)
     {
-        if (carrier == "FREIGHT")
+        if (carrier == Freight)
             return (decimal)weight * 2.5m;
         else if (carrier == "INTL_EXPRESS" || carrier == "INTL_STANDARD")
             return basePrice * 0.15m + 25m;
@@ -183,7 +185,7 @@ public class ShipmentProcessor
                 handlingFee += 15m;
                 requiresSignature = true;
             }
-            if (item.IsFragile && carrier != "FREIGHT")
+            if (item.IsFragile && carrier != Freight)
                 handlingFee += 5m;
             if (item.IsOversized)
                 handlingFee += 20m;

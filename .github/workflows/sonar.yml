@@ -47,7 +47,6 @@ jobs:
             /o:"paulo-private" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
             /d:sonar.host.url="https://dev6.sc-dev6.io" \
-            /d:sonar.sources="." \
             /d:sonar.java.binaries="target/classes"
       - name: Build .NET
         run: dotnet build Example.csproj

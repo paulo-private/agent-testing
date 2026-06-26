@@ -333,7 +333,7 @@
     "project": "sonar-test-project",
     "line": 1,
     "textRange": { "startLine": 1, "endLine": 1, "startOffset": 0, "endOffset": 79 },
-    "message": "This function has 7 parameters, which is greater than the 5 authorized.",
+    "message": "This function has 20 parameters, which is greater than the 13 authorized.",
     "status": "OPEN",
     "flows": []
   }

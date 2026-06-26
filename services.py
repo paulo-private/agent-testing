@@ -30,5 +30,5 @@ def delete_data(url, timeout=30):
         response.raise_for_status()
         return True
     except requests.exceptions.HTTPError as e:
-        logger.error("HTTP Error %d for DELETE %s", e.response.status_code, url)
+        logger.exception("HTTP Error %d for DELETE %s", e.response.status_code, url)
         return False

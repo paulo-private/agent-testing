@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Example;
 
 public class DataImporter
@@ -15,7 +17,8 @@ public class DataImporter
         }
         catch (IOException ex)
         {
-            // Import failed, skip silently
+            Trace.TraceError("Failed to import records from {0}: {1}", filePath, ex);
+            throw;
         }
     }
 

@@ -318,9 +318,9 @@
     "type": "BUG",
     "component": "sonar-test-project:DataImporter.cs",
     "project": "sonar-test-project",
-    "line": 16,
-    "textRange": { "startLine": 16, "endLine": 19, "startOffset": 8, "endOffset": 9 },
-    "message": "Either log or rethrow this exception.",
+    "line": 19,
+    "textRange": { "startLine": 19, "endLine": 22, "startOffset": 8, "endOffset": 9 },
+    "message": "Either log this exception and handle it, or rethrow it, but not both.",
     "status": "OPEN",
     "flows": []
   },

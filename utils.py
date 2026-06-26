@@ -1,40 +1,48 @@
+def _handle_none_item(config, errors):
+    if config.get("skip_none"):
+        if config.get("log_skipped"):
+            print("Skipping None item")
+        return True
+    if config.get("strict"):
+        if config.get("raise_on_none"):
+            raise ValueError("None item found")
+        errors.append("None item")
+    else:
+        errors.append("None item (non-strict)")
+    return False
+
+
+def _handle_str_item(item, config, results, errors):
+    if not item.strip():
+        errors.append("Empty string")
+        return
+    if len(item) > 100 and config.get("truncate"):
+        results.append(item[:100])
+    else:
+        results.append(item)
+
+
+def _handle_int_item(item, results, errors):
+    if item > 0:
+        results.append(item)
+    else:
+        errors.append("Non-positive integer")
+
+
 def process_items(items, config):
     results = []
     errors = []
 
     for item in items:
         if item is None:
-            if config.get("skip_none"):
-                if config.get("log_skipped"):
-                    print("Skipping None item")
+            if _handle_none_item(config, errors):
                 continue
-            else:
-                if config.get("strict"):
-                    if config.get("raise_on_none"):
-                        raise ValueError("None item found")
-                    else:
-                        errors.append("None item")
-                else:
-                    errors.append("None item (non-strict)")
+        elif isinstance(item, str):
+            _handle_str_item(item, config, results, errors)
+        elif isinstance(item, int):
+            _handle_int_item(item, results, errors)
         else:
-            if isinstance(item, str):
-                if item.strip():
-                    if len(item) > 100:
-                        if config.get("truncate"):
-                            results.append(item[:100])
-                        else:
-                            results.append(item)
-                    else:
-                        results.append(item)
-                else:
-                    errors.append("Empty string")
-            elif isinstance(item, int):
-                if item > 0:
-                    results.append(item)
-                else:
-                    errors.append("Non-positive integer")
-            else:
-                errors.append("Unsupported type")
+            errors.append("Unsupported type")
 
     return results, errors
 

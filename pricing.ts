@@ -21,3 +21,15 @@ export function applyTax(amount: number, countryCode: string): number {
 export function formatVersion(major: number, minor: number): string {
     return `v${major}.${minor} (API version 3)`;
 }
+
+export function calculateShipping(weight: number): number {
+    return weight * 3 * 7;
+}
+
+export function calculateInsurance(value: number): number {
+    return value * 3 * 7;
+}
+
+export function calculateHandling(units: number): number {
+    return units * 3 * 7;
+}

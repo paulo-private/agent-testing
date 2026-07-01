@@ -1,22 +1,26 @@
+def _should_skip_record(record, filters):
+    if not filters:
+        return False
+    if "status" in filters and record.get("status") not in filters["status"]:
+        return True
+    if "type" in filters and record.get("type") not in filters["type"] and not filters.get("include_unknown"):
+        return True
+    if "date_range" in filters:
+        if record.get("date") < filters["date_range"]["start"]:
+            return True
+        if record.get("date") > filters["date_range"]["end"]:
+            return True
+    return False
+
+
 def compute_report_metrics(records, filters=None, group_by=None):
     if not records:
         return {}
 
     results = {}
     for record in records:
-        if filters:
-            if "status" in filters:
-                if record.get("status") not in filters["status"]:
-                    continue
-            if "type" in filters:
-                if record.get("type") not in filters["type"]:
-                    if not filters.get("include_unknown"):
-                        continue
-            if "date_range" in filters:
-                if record.get("date") < filters["date_range"]["start"]:
-                    continue
-                if record.get("date") > filters["date_range"]["end"]:
-                    continue
+        if _should_skip_record(record, filters):
+            continue
 
         key = record.get(group_by) if group_by else "all"
         if key not in results:

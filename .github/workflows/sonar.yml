@@ -51,8 +51,7 @@ jobs:
             /o:"paulo-private" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
             /d:sonar.scanner.sonarcloudUrl="https://dev6.sc-dev6.io" \
-            /d:sonar.scanner.apiBaseUrl="https://api.sc-dev6.io" \
-            /d:sonar.java.binaries="target/classes"
+            /d:sonar.scanner.apiBaseUrl="https://api.sc-dev6.io"
       - name: Compile Java
         run: mvn -B compile
       - name: Build .NET

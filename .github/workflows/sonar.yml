@@ -40,17 +40,13 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Install Python dependencies
         run: uv sync
-      - name: Compile Java
-        run: mvn -B compile
       - name: Build .NET
         run: dotnet build Example.csproj
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v5
+      - name: Analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://dev11.sc-dev11.io
-        with:
-          args: >
-            -Dsonar.projectKey=paulo-private_agent-testing
-            -Dsonar.organization=paulo-private
-            -Dsonar.scanner.apiBaseUrl=https://api.sc-dev11.io
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -DskipTests \
+            -Dsonar.projectKey=paulo-private_agent-testing \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}

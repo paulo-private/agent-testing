@@ -50,8 +50,8 @@ jobs:
             /k:"paulo-private_agent-testing" \
             /o:"paulo-private" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
-            /d:sonar.scanner.sonarcloudUrl="https://dev6.sc-dev6.io" \
-            /d:sonar.scanner.apiBaseUrl="https://api.sc-dev6.io"
+            /d:sonar.scanner.sonarcloudUrl="https://dev11.sc-dev11.io" \
+            /d:sonar.scanner.apiBaseUrl="https://api.sc-dev11.io"
       - name: Compile Java
         run: mvn -B compile
       - name: Build .NET

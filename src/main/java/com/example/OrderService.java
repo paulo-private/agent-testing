@@ -1,11 +1,10 @@
 package com.example;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class OrderService {
 
-    public void processOrders() throws IOException, SQLException {
+    public void processOrders() throws IOException {
         if (!loadOrders()) {
             throw new IOException("Failed to load orders from disk");
         }
@@ -18,7 +17,7 @@ public class OrderService {
     public String fetchStatus() {
         try {
             processOrders();
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
             return "error: " + e.getMessage();
         }
         return "ok";

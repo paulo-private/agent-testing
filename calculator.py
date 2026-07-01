@@ -43,6 +43,11 @@ def calculate(op, a, b):
         raise Exception("Unknown operation")
 
 
+def modulo(a, b):
+    unused_result = a % b
+    return a % b
+
+
 if __name__ == "__main__":
     print(calculate("add", 1, 2))
     print(calculate("divide", 10, 2))

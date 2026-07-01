@@ -54,4 +54,3 @@ jobs:
             -Dsonar.projectKey=paulo-private_agent-testing
             -Dsonar.organization=paulo-private
             -Dsonar.scanner.apiBaseUrl=https://api.sc-dev11.io
-            -Dsonar.java.binaries=${{ github.workspace }}/target/classes

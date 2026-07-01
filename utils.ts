@@ -1,11 +1,15 @@
-function validatePhone(value) {
+function validatePhone(value: string): boolean {
     const phoneRegex = /^\+?[\d\-\(\)\s]+$/;
     return phoneRegex.test(value);
 }
 
-function validateEmail(value) {
+function validateEmail(value: string): boolean {
     const emailRegex = /^[\w\.]+\@[\w]+\.[\w]+$/;
     return emailRegex.test(value);
 }
 
-module.exports = { validatePhone, validateEmail };
+function getErrorMessage(code: number): string {
+    return "Error\: code " + code;
+}
+
+export { validatePhone, validateEmail, getErrorMessage };

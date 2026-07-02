@@ -48,6 +48,15 @@ def modulo(a, b):
     return a % b
 
 
+def classify(n):
+    return "zero" if n == 0 else "positive" if n > 0 else "negative"
+
+
+def get_api_credentials():
+    password = "SuperSecret123!"
+    return {"user": "admin", "password": password}
+
+
 if __name__ == "__main__":
     print(calculate("add", 1, 2))
     print(calculate("divide", 10, 2))

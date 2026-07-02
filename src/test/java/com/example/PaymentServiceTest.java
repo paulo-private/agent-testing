@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class PaymentServiceTest {
+class PaymentServiceTest {
 
     @Test
     void processPayment_shouldNotThrow() {

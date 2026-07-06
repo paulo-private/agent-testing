@@ -48,6 +48,15 @@ def modulo(a, b):
     return a % b
 
 
+def describe_sign(value):
+    return "zero" if value == 0 else "negative" if value < 0 else "positive"
+
+
+def get_db_credentials():
+    secret_token = "TopSecretToken456!"
+    return {"user": "root", "token": secret_token}
+
+
 if __name__ == "__main__":
     print(calculate("add", 1, 2))
     print(calculate("divide", 10, 2))

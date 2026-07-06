@@ -28,7 +28,6 @@ def power(a, b):
     if b < 0:
         raise ValueError("Negative exponent not supported")
     result = a**b
-    debug_value = result * 2
     return result
 
 

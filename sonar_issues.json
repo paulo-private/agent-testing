@@ -583,5 +583,31 @@
     "message": "Define a constant instead of duplicating this literal \"https://payments.internal/api/v2\" 4 times.",
     "status": "OPEN",
     "flows": []
+  },
+  {
+    "key": "issue-045",
+    "rule": "python:S3358",
+    "severity": "MAJOR",
+    "type": "CODE_SMELL",
+    "component": "sonar-test-project:calculator.py",
+    "project": "sonar-test-project",
+    "line": 52,
+    "textRange": { "startLine": 52, "endLine": 52, "startOffset": 11, "endOffset": 66 },
+    "message": "Extract this nested ternary operation into an independent statement.",
+    "status": "OPEN",
+    "flows": []
+  },
+  {
+    "key": "issue-046",
+    "rule": "python:S2068",
+    "severity": "CRITICAL",
+    "type": "VULNERABILITY",
+    "component": "sonar-test-project:calculator.py",
+    "project": "sonar-test-project",
+    "line": 56,
+    "textRange": { "startLine": 56, "endLine": 56, "startOffset": 4, "endOffset": 33 },
+    "message": "Review this potentially hard-coded credential.",
+    "status": "OPEN",
+    "flows": []
   }
 ]

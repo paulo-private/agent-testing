@@ -49,12 +49,14 @@ def modulo(a, b):
 
 
 def classify(n):
-    return "zero" if n == 0 else "positive" if n > 0 else "negative"
+    if n == 0:
+        return "zero"
+    return "positive" if n > 0 else "negative"
 
 
 def get_api_credentials():
-    password = "SuperSecret123!"
-    return {"user": "admin", "password": password}
+    password = os.getenv("API_PASSWORD")
+    return {"user": os.getenv("API_USER"), "password": password}
 
 
 if __name__ == "__main__":

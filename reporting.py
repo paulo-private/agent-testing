@@ -1,35 +1,44 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class ReportConfig:
+    """Configuration for report generation."""
+    report_format: str
+    include_charts: bool
+    include_summary: bool
+    max_rows: int
+    output_dir: str
+    title: str
+    locale: str
+    timezone: str
+    page_size: str
+    watermark: str
+    compress_output: bool
+    send_email: bool
+    email_recipients: list
+    chart_type: str
+    color_scheme: str
+    logo_path: str
+
+
 def generate_report(
     user_id,
     start_date,
     end_date,
-    report_format,
-    include_charts,
-    include_summary,
-    max_rows,
-    output_dir,
-    title,
-    locale,
-    timezone,
-    page_size,
-    watermark,
-    compress_output,
-    send_email,
-    email_recipients,
-    chart_type,
-    color_scheme,
-    logo_path,
+    config: ReportConfig,
 ):
     """Generate a report for the given user."""
-    rows = fetch_data(user_id, start_date, end_date, max_rows)
-    if include_charts:
-        charts = build_charts(rows, locale, chart_type, color_scheme)
+    rows = fetch_data(user_id, start_date, end_date, config.max_rows)
+    if config.include_charts:
+        charts = build_charts(rows, config.locale, config.chart_type, config.color_scheme)
     else:
         charts = []
-    summary = build_summary(rows) if include_summary else None
+    summary = build_summary(rows) if config.include_summary else None
     return write_output(
-        rows, charts, summary, report_format, output_dir,
-        title, locale, timezone, page_size, watermark,
-        compress_output, send_email, email_recipients, logo_path,
+        rows, charts, summary, config.report_format, config.output_dir,
+        config.title, config.locale, config.timezone, config.page_size, config.watermark,
+        config.compress_output, config.send_email, config.email_recipients, config.logo_path,
     )
 
 

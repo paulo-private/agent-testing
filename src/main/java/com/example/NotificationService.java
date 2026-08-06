@@ -1,24 +1,28 @@
 package com.example;
 
+import java.util.logging.Logger;
+
 public class NotificationService {
 
+    private static final Logger logger = Logger.getLogger(NotificationService.class.getName());
     private static final String APP_NAME = "MyApp";
+    private static final String SENDING_EMAIL_PREFIX = "Sending email to: ";
 
     public void sendWelcomeEmail(String email) {
-        System.out.println("Sending email to: " + email);
-        log("Sending email to: " + email);
-        audit("Sending email to: " + email);
+        logger.info(() -> SENDING_EMAIL_PREFIX + email);
+        log(SENDING_EMAIL_PREFIX + email);
+        audit(SENDING_EMAIL_PREFIX + email);
     }
 
     public void resendVerification(String email) {
-        System.out.println("Sending email to: " + email);
+        logger.info(() -> SENDING_EMAIL_PREFIX + email);
     }
 
     private void log(String message) {
-        System.out.println("[" + APP_NAME + "] LOG: " + message);
+        logger.info(() -> "[" + APP_NAME + "] LOG: " + message);
     }
 
     private void audit(String message) {
-        System.out.println("[AUDIT] " + message);
+        logger.info(() -> "[AUDIT] " + message);
     }
 }

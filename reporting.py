@@ -46,4 +46,4 @@ def build_summary(rows):
 
 
 def write_output(rows, charts, summary, report_format, output_dir, title, locale, timezone, page_size, watermark, compress_output, send_email, email_recipients, logo_path):
-    pass
+    pass  # Intentionally left blank; report output generation is not implemented here.

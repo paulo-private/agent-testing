@@ -44,7 +44,6 @@ def calculate(op, a, b):
 
 
 def modulo(a, b):
-    unused_result = a % b
     return a % b
 
 

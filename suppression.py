@@ -7,5 +7,6 @@ def run_command(cmd: str) -> str:
 
 
 def run_shell_command(script: str) -> str:
-    result = subprocess.run(script, shell=True, capture_output=True)  # noqa: S603 script is trusted, sourced from internal config only
+    # script is trusted, sourced from internal config only
+    result = subprocess.run(script, shell=True, capture_output=True)  # noqa: S603
     return result.stdout.decode()

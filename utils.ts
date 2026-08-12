@@ -9,7 +9,7 @@ function validateEmail(value: string): boolean {
 }
 
 function getErrorMessage(code: number): string {
-    return "Error\: code " + code;
+    return "Error: code " + code;
 }
 
 export { validatePhone, validateEmail, getErrorMessage };

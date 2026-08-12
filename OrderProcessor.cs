@@ -53,7 +53,37 @@ public class ShipmentResult
 
 public class ShipmentProcessor
 {
+    private const string FreightCarrier = "FREIGHT";
+
     public ShipmentResult ProcessShipmentOrder(ShipmentOrder order)
+    {
+        ValidateOrder(order);
+
+        var shippingOption = GetShippingOption(order);
+        decimal basePrice = CalculateBasePrice(order);
+        decimal shippingCost = CalculateShippingCost(order, shippingOption.Carrier, basePrice);
+        decimal discount = CalculateDiscount(order, basePrice, shippingCost);
+        decimal tax = CalculateTax(order, basePrice, discount, shippingCost);
+        var handling = CalculateHandling(order.Items, shippingOption.Carrier);
+        bool requiresApproval = RequiresApproval(order, basePrice, discount);
+        decimal totalPrice = basePrice + shippingCost + handling.Fee + tax - discount;
+
+        return new ShipmentResult
+        {
+            Carrier = shippingOption.Carrier,
+            DeliveryDays = shippingOption.DeliveryDays,
+            BasePrice = basePrice,
+            ShippingCost = shippingCost,
+            HandlingFee = handling.Fee,
+            Discount = discount,
+            Tax = tax,
+            TotalPrice = totalPrice,
+            RequiresSignature = handling.RequiresSignature,
+            RequiresApproval = requiresApproval,
+        };
+    }
+
+    private static void ValidateOrder(ShipmentOrder order)
     {
         if (order == null)
             throw new ArgumentNullException(nameof(order));
@@ -63,144 +93,154 @@ public class ShipmentProcessor
             throw new ArgumentException("Order must contain at least one item.");
         if (order.Destination.CountryCode.Length == 0)
             throw new ArgumentException("Order must have a valid destination.");
+    }
 
-        string carrier;
-        int deliveryDays;
-
-        switch (order.ShippingTier)
+    private static (string Carrier, int DeliveryDays) GetShippingOption(ShipmentOrder order)
+    {
+        return order.ShippingTier switch
         {
-            case "express":
-                if (order.Weight > 30 || order.IsOversized)
-                {
-                    carrier = "FREIGHT";
-                    deliveryDays = 2;
-                }
-                else if (order.Destination.IsInternational && order.Destination.CountryCode != "CA")
-                {
-                    carrier = "INTL_EXPRESS";
-                    deliveryDays = 3;
-                }
-                else
-                {
-                    carrier = "LOCAL_EXPRESS";
-                    deliveryDays = 1;
-                }
-                break;
-            case "standard":
-                if (order.Destination.IsInternational)
-                {
-                    carrier = "INTL_STANDARD";
-                    deliveryDays = 14;
-                }
-                else if (order.Weight > 50)
-                {
-                    carrier = "FREIGHT";
-                    deliveryDays = 5;
-                }
-                else
-                {
-                    carrier = "STANDARD";
-                    deliveryDays = 5;
-                }
-                break;
-            case "economy":
-                carrier = order.Destination.IsInternational ? "INTL_ECONOMY" : "GROUND";
-                deliveryDays = order.Destination.IsInternational ? 21 : 7;
-                break;
-            case "white_glove":
-                if (order.Destination.IsInternational)
-                {
-                    carrier = "INTL_PREMIUM";
-                    deliveryDays = 5;
-                }
-                else
-                {
-                    carrier = "WHITE_GLOVE";
-                    deliveryDays = 2;
-                }
-                break;
-            default:
-                carrier = "STANDARD";
-                deliveryDays = 5;
-                break;
-        }
+            "express" => GetExpressShippingOption(order),
+            "standard" => GetStandardShippingOption(order),
+            "economy" => GetEconomyShippingOption(order),
+            "white_glove" => GetWhiteGloveShippingOption(order),
+            _ => ("STANDARD", 5),
+        };
+    }
 
-        decimal basePrice = order.Items.Sum(i => i.Price * i.Quantity);
+    private static (string Carrier, int DeliveryDays) GetExpressShippingOption(ShipmentOrder order)
+    {
+        if (order.Weight > 30 || order.IsOversized)
+            return (FreightCarrier, 2);
+        if (order.Destination.IsInternational && order.Destination.CountryCode != "CA")
+            return ("INTL_EXPRESS", 3);
 
-        decimal shippingCost;
-        if (carrier == "FREIGHT")
-            shippingCost = (decimal)order.Weight * 2.5m;
-        else if (carrier == "INTL_EXPRESS" || carrier == "INTL_STANDARD")
-            shippingCost = basePrice * 0.15m + 25m;
-        else if (carrier == "INTL_ECONOMY")
-            shippingCost = basePrice * 0.08m + 10m;
-        else if (carrier == "INTL_PREMIUM")
-            shippingCost = basePrice * 0.20m + 50m;
-        else if (carrier == "WHITE_GLOVE")
-            shippingCost = basePrice * 0.12m + 30m;
-        else
-            shippingCost = (decimal)order.Weight * 0.5m + 5m;
+        return ("LOCAL_EXPRESS", 1);
+    }
 
-        decimal discount = 0m;
-        if (order.Customer.IsVip && basePrice > 500m)
-            discount += basePrice * 0.10m;
-        else if (order.Customer.IsVip)
-            discount += basePrice * 0.05m;
+    private static (string Carrier, int DeliveryDays) GetStandardShippingOption(ShipmentOrder order)
+    {
+        if (order.Destination.IsInternational)
+            return ("INTL_STANDARD", 14);
+        if (order.Weight > 50)
+            return (FreightCarrier, 5);
 
-        if (order.DiscountCode != null && order.DiscountCode.StartsWith("SAVE"))
-            discount += basePrice * 0.08m;
-        else if (order.DiscountCode != null && order.DiscountCode.StartsWith("SHIP"))
-            discount += shippingCost * 0.50m;
+        return ("STANDARD", 5);
+    }
 
+    private static (string Carrier, int DeliveryDays) GetEconomyShippingOption(ShipmentOrder order)
+    {
+        return order.Destination.IsInternational ? ("INTL_ECONOMY", 21) : ("GROUND", 7);
+    }
+
+    private static (string Carrier, int DeliveryDays) GetWhiteGloveShippingOption(ShipmentOrder order)
+    {
+        if (order.Destination.IsInternational)
+            return ("INTL_PREMIUM", 5);
+
+        return ("WHITE_GLOVE", 2);
+    }
+
+    private static decimal CalculateBasePrice(ShipmentOrder order)
+    {
+        return order.Items.Sum(i => i.Price * i.Quantity);
+    }
+
+    private static decimal CalculateShippingCost(ShipmentOrder order, string carrier, decimal basePrice)
+    {
+        if (carrier == FreightCarrier)
+            return (decimal)order.Weight * 2.5m;
+        if (carrier == "INTL_EXPRESS" || carrier == "INTL_STANDARD")
+            return basePrice * 0.15m + 25m;
+        if (carrier == "INTL_ECONOMY")
+            return basePrice * 0.08m + 10m;
+        if (carrier == "INTL_PREMIUM")
+            return basePrice * 0.20m + 50m;
+        if (carrier == "WHITE_GLOVE")
+            return basePrice * 0.12m + 30m;
+
+        return (decimal)order.Weight * 0.5m + 5m;
+    }
+
+    private static decimal CalculateDiscount(ShipmentOrder order, decimal basePrice, decimal shippingCost)
+    {
+        return CalculateVipDiscount(order.Customer, basePrice)
+            + CalculateDiscountCodeDiscount(order.DiscountCode, basePrice, shippingCost)
+            + CalculateBulkDiscount(order, basePrice);
+    }
+
+    private static decimal CalculateVipDiscount(CustomerInfo customer, decimal basePrice)
+    {
+        if (customer.IsVip && basePrice > 500m)
+            return basePrice * 0.10m;
+        if (customer.IsVip)
+            return basePrice * 0.05m;
+
+        return 0m;
+    }
+
+    private static decimal CalculateDiscountCodeDiscount(string? discountCode, decimal basePrice, decimal shippingCost)
+    {
+        if (discountCode != null && discountCode.StartsWith("SAVE"))
+            return basePrice * 0.08m;
+        if (discountCode != null && discountCode.StartsWith("SHIP"))
+            return shippingCost * 0.50m;
+
+        return 0m;
+    }
+
+    private static decimal CalculateBulkDiscount(ShipmentOrder order, decimal basePrice)
+    {
         if (order.Items.Count > 10 && basePrice > 1000m)
-            discount += basePrice * 0.05m;
+            return basePrice * 0.05m;
 
-        decimal taxRate = 0m;
-        if (order.Destination.CountryCode == "US")
-            taxRate = 0.08m;
-        else if (order.Destination.CountryCode == "CA")
-            taxRate = 0.13m;
-        else if (order.Destination.IsInternational)
-            taxRate = 0.20m;
+        return 0m;
+    }
 
-        decimal tax = (basePrice - discount + shippingCost) * taxRate;
+    private static decimal CalculateTax(ShipmentOrder order, decimal basePrice, decimal discount, decimal shippingCost)
+    {
+        decimal taxRate = GetTaxRate(order.Destination);
+        return (basePrice - discount + shippingCost) * taxRate;
+    }
 
+    private static decimal GetTaxRate(ShipmentDestination destination)
+    {
+        if (destination.CountryCode == "US")
+            return 0.08m;
+        if (destination.CountryCode == "CA")
+            return 0.13m;
+        if (destination.IsInternational)
+            return 0.20m;
+
+        return 0m;
+    }
+
+    private static (decimal Fee, bool RequiresSignature) CalculateHandling(List<OrderItem> items, string carrier)
+    {
         bool requiresSignature = false;
         decimal handlingFee = 0m;
 
-        foreach (var item in order.Items)
+        foreach (var item in items)
         {
             if (item.IsHazmat)
             {
                 handlingFee += 15m;
                 requiresSignature = true;
             }
-            if (item.IsFragile && carrier != "FREIGHT")
+            if (item.IsFragile && carrier != FreightCarrier)
                 handlingFee += 5m;
             if (item.IsOversized)
                 handlingFee += 20m;
         }
 
-        bool requiresApproval = false;
-        if ((basePrice - discount) > 10000m || order.Destination.IsRestrictedZone)
-            requiresApproval = true;
-        else if (order.Customer.RiskScore > 7 && (basePrice - discount) > 2000m)
-            requiresApproval = true;
+        return (handlingFee, requiresSignature);
+    }
 
-        decimal totalPrice = basePrice + shippingCost + handlingFee + tax - discount;
+    private static bool RequiresApproval(ShipmentOrder order, decimal basePrice, decimal discount)
+    {
+        decimal discountedPrice = basePrice - discount;
 
-        return new ShipmentResult
-        {
-            Carrier = carrier,
-            DeliveryDays = deliveryDays,
-            BasePrice = basePrice,
-            ShippingCost = shippingCost,
-            HandlingFee = handlingFee,
-            Discount = discount,
-            Tax = tax,
-            TotalPrice = totalPrice,
-            RequiresSignature = requiresSignature,
-            RequiresApproval = requiresApproval,
-        };
+        return discountedPrice > 10000m
+            || order.Destination.IsRestrictedZone
+            || order.Customer.RiskScore > 7 && discountedPrice > 2000m;
     }
 }

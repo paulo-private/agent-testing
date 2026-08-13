@@ -1,5 +1,5 @@
 function validatePhone(value: string): boolean {
-    const phoneRegex = /^\+?[\d\-\(\)\s]+$/;
+    const phoneRegex = /^\+?[\d\-()\s]+$/;
     return phoneRegex.test(value);
 }
 

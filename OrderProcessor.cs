@@ -53,6 +53,7 @@ public class ShipmentResult
 
 public class ShipmentProcessor
 {
+    private const string FreightCarrier = "FREIGHT";
     public ShipmentResult ProcessShipmentOrder(ShipmentOrder order)
     {
         if (order == null)
@@ -72,7 +73,7 @@ public class ShipmentProcessor
             case "express":
                 if (order.Weight > 30 || order.IsOversized)
                 {
-                    carrier = "FREIGHT";
+                    carrier = FreightCarrier;
                     deliveryDays = 2;
                 }
                 else if (order.Destination.IsInternational && order.Destination.CountryCode != "CA")
@@ -94,7 +95,7 @@ public class ShipmentProcessor
                 }
                 else if (order.Weight > 50)
                 {
-                    carrier = "FREIGHT";
+                    carrier = FreightCarrier;
                     deliveryDays = 5;
                 }
                 else
@@ -128,7 +129,7 @@ public class ShipmentProcessor
         decimal basePrice = order.Items.Sum(i => i.Price * i.Quantity);
 
         decimal shippingCost;
-        if (carrier == "FREIGHT")
+        if (carrier == FreightCarrier)
             shippingCost = (decimal)order.Weight * 2.5m;
         else if (carrier == "INTL_EXPRESS" || carrier == "INTL_STANDARD")
             shippingCost = basePrice * 0.15m + 25m;
@@ -175,7 +176,7 @@ public class ShipmentProcessor
                 handlingFee += 15m;
                 requiresSignature = true;
             }
-            if (item.IsFragile && carrier != "FREIGHT")
+            if (item.IsFragile && carrier != FreightCarrier)
                 handlingFee += 5m;
             if (item.IsOversized)
                 handlingFee += 20m;

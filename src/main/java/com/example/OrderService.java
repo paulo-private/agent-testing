@@ -5,14 +5,12 @@ import java.sql.SQLException;
 
 public class OrderService {
 
+    private static final boolean ORDERS_LOADED = true;
+
     public void processOrders() throws IOException, SQLException {
-        if (!loadOrders()) {
+        if (!ORDERS_LOADED) {
             throw new IOException("Failed to load orders from disk");
         }
-    }
-
-    private boolean loadOrders() {
-        return true;
     }
 
     public String fetchStatus() {

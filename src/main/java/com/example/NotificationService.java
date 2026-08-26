@@ -4,14 +4,16 @@ public class NotificationService {
 
     private static final String APP_NAME = "MyApp";
 
+    private static final String SENDING_EMAIL_PREFIX = "Sending email to: ";
+
     public void sendWelcomeEmail(String email) {
-        System.out.println("Sending email to: " + email);
-        log("Sending email to: " + email);
-        audit("Sending email to: " + email);
+        System.out.println(SENDING_EMAIL_PREFIX + email);
+        log(SENDING_EMAIL_PREFIX + email);
+        audit(SENDING_EMAIL_PREFIX + email);
     }
 
     public void resendVerification(String email) {
-        System.out.println("Sending email to: " + email);
+        System.out.println(SENDING_EMAIL_PREFIX + email);
     }
 
     private void log(String message) {

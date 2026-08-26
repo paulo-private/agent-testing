@@ -3,11 +3,13 @@ package com.example;
 public class NotificationService {
 
     private static final String APP_NAME = "MyApp";
+    private static final String EMAIL_PREFIX = "Sending email to: ";
+
 
     public void sendWelcomeEmail(String email) {
-        System.out.println("Sending email to: " + email);
-        log("Sending email to: " + email);
-        audit("Sending email to: " + email);
+        System.out.println(EMAIL_PREFIX + email);
+        log(EMAIL_PREFIX + email);
+        audit(EMAIL_PREFIX + email);
     }
 
     public void resendVerification(String email) {

@@ -16,7 +16,6 @@
         <sonar.organization>paulo-private</sonar.organization>
         <sonar.scanner.sonarcloudUrl>https://dev11.sc-dev11.io</sonar.scanner.sonarcloudUrl>
         <sonar.scanner.apiBaseUrl>https://api.sc-dev11.io</sonar.scanner.apiBaseUrl>
-        <sonar.sources>.</sonar.sources>
         <sonar.exclusions>target/**</sonar.exclusions>
     </properties>
 

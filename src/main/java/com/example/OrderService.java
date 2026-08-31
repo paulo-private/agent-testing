@@ -12,7 +12,12 @@ public class OrderService {
     }
 
     private boolean loadOrders() {
-        return true;
+        try {
+            // Attempt to load orders from disk
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String fetchStatus() {

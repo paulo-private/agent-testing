@@ -12,7 +12,8 @@ public class OrderService {
     }
 
     private boolean loadOrders() {
-        return true;
+        java.io.File ordersFile = new java.io.File("orders.dat");
+        return ordersFile.exists();
     }
 
     public String fetchStatus() {

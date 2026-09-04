@@ -6,9 +6,7 @@ import java.sql.SQLException;
 public class OrderService {
 
     public void processOrders() throws IOException, SQLException {
-        if (!loadOrders()) {
-            throw new IOException("Failed to load orders from disk");
-        }
+        loadOrders();
     }
 
     private boolean loadOrders() {

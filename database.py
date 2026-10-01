@@ -1,7 +1,8 @@
+import os
 import sqlite3
 
-DB_PASSWORD = "admin123"
-DB_USER = "root"
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
+DB_USER = os.environ.get("DB_USER", "")
 
 
 def get_connection():

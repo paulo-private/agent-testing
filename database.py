@@ -1,6 +1,7 @@
+import os
 import sqlite3
 
-DB_PASSWORD = "admin123"
+DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 DB_USER = "root"
 
 

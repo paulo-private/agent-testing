@@ -3,7 +3,6 @@
 
 def add(a, b):
     result = a + b
-    unused_var = 42
     return result
 
 

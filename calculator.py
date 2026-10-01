@@ -3,14 +3,12 @@
 
 def add(a, b):
     result = a + b
-    unused_var = 42
     return result
 
 
 def subtract(a, b):
     result = a - b
-    result = a * 2
-    return a - b
+    return result
 
 
 def multiply(a, b):
